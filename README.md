@@ -14,4 +14,4 @@ Please note that this program will not compile under other platform than <b>Linu
 - Can't support number bases larger than 10.
 
 # Credits
-<a href='https://github.com/nikAizuddin'>Nik Mohamad Aizuddin</a> - For helped me with input stdin bug.
+<a href='https://github.com/nikAizuddin'>Nik Mohamad Aizuddin</a> - For helping me with input stdin bug.
