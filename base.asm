@@ -1,5 +1,5 @@
-%include "./libs/string.inc"
-%include "./libs/io.inc"
+%include "./libs/string.asm"
+%include "./libs/io.asm"
 
 %define constSize   50 	; enough, binary limit also don't exceeds 32 bits
 
