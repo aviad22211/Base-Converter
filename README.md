@@ -1,7 +1,7 @@
 # Base-Converter
 Simple base converter written using x86 NASM Assembly Language
 
-# Requirements
+# Requirement(s)
 - Linux
 - NASM Assembler
 - GCC (as linker)
@@ -12,9 +12,11 @@ Please note that this program will not compile under platform other than <b>Linu
 Also this program isn't fast enough like one that produced by high-level compilers. This was written as pratice for me while learning assembly language.
 So in time, I will update this program to optimize it while I'm learning how compiler optimized high-level language.
 
-# Limitations
-- Can't support integer input more than 32 bit.
-- Can't support number bases larger than 10.
+# Feature(s)
+- Can support number bases up to Base 36.
 
-# Credits
+# Limitation(s)
+- Can't support integer input more than 32 bit.
+
+# Credit(s)
 <a href='https://github.com/nikAizuddin'>Nik Mohamad Aizuddin</a> - For helping me with input stdin bug.
