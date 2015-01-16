@@ -111,12 +111,12 @@ strtol:
     cmp     edi, 90
     jle     .strtol_big_char
 
-    sub     edi, 87                          ; get low letter number from character (start with base 11)
+    sub     edi, 61                          ; get low letter number from character (start with base 37)
     jmp     .strtol_cont_calc
 
     .strtol_big_char:
 
-    sub     edi, 29                          ; get big letter number from character (start with base 37)
+    sub     edi, 55                          ; get big letter number from character (start with base 11)
     jmp     .strtol_cont_calc
 
     .strtol_normal_ascii:
@@ -197,12 +197,12 @@ ltostr:
     cmp     edx, 36
     jl      .ltostr_below_thirty
 
-    add     edx, 29                ; if remainder is more than 36, then make it to be character A-Z
+    add     edx, 61                ; if remainder is more than 36, then make it to be character a-z
     jmp     .ltostr_done_change_ascii
 
     .ltostr_below_thirty:
 
-    add     edx, 87                ; if remainder is 10-35, then make it to be character a-z
+    add     edx, 55                ; if remainder is 10-35, then make it to be character A-Z
     jmp     .ltostr_done_change_ascii
 
     .ltostr_below_ten:
