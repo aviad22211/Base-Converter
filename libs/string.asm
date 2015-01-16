@@ -63,8 +63,7 @@ strtol:
     ; (it can also be binary, octal, base 5, etc), but we indicated it 
     ; as base 10, so at strBase perimeter, set it to be 10.
     ;
-    ; This routine will also works with base number larger than 10, and also can
-    ; process with 2 style of hexadecimal string, example if "FF" and "ff".
+    ; This routine will also works with base number larger than 10.
     ;
     ; Hint on how this internally works, it's start working with the right-most number
     ; into left-most number. If you're so curious on how this thing work, then have
