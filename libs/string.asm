@@ -63,6 +63,9 @@ strtol:
     ; (it can also be binary, octal, base 5, etc), but we indicated it 
     ; as base 10, so at strBase perimeter, set it to be 10.
     ;
+    ; This routine will also works with base number larger than 10, and also can
+    ; process with 2 style of hexadecimal string, example if "FF" and "ff".
+    ;
     ; Hint on how this internally works, it's start working with the right-most number
     ; into left-most number. If you're so curious on how this thing work, then have
     ; a look in below assembly.
@@ -98,7 +101,29 @@ strtol:
     xor     edx, edx                         ; edx = 0
     mov     dl, byte [esi+eax]               ; copy character inside string into d lower
     mov     edi, edx
+
+    ; checking for hexadecimal
+
+    cmp     edi, 57
+    jnge    .strtol_normal_ascii
+
+    ; check if char is A-Z
+    cmp     edi, 90
+    jnge    .strtol_big_char
+
+    sub     edi, 87                          ; get hexadecimal number from character
+    jmp     .strtol_cont_calc
+
+    .strtol_big_char:
+
+    sub     edi, 55                          ; get hexadecimal number from character
+    jmp     .strtol_cont_calc
+
+    .strtol_normal_ascii:
+
     sub     edi, 48                          ; get integer from ascii number
+
+    .strtol_cont_calc:
 
     ; if number is zero (multiply any number with 0 will get 0 anyway), then skip this number
     ; this improve performance alot when source base is in base 2 (binary)
@@ -166,8 +191,20 @@ ltostr:
     xor     edx, edx               ; edx = 0
     div     edi                    ; divide num by edi
 
+    ; check if edx is below than 10
+    cmp     edx, 10
+    jl      .ltostr_below_ten
+
+    add     edx, 55                ; if remainder is more than 10, then make it to be character A-Z
+    jmp     .ltostr_done_change_ascii
+
+    .ltostr_below_ten:
+
     ; get remainder value, and add 48 to make it suitable with ascii format
     add     edx, 48
+
+    .ltostr_done_change_ascii:
+
     mov     [ebx+ecx], dl          ; move first 1 byte of edx into buf str buffer
     inc     ecx                    ; increment index (low to high) N-1
  
