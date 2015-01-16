@@ -102,7 +102,7 @@ strtol:
     mov     dl, byte [esi+eax]               ; copy character inside string into d lower
     mov     edi, edx
 
-    ; checking for hexadecimal
+    ; checking for letter
 
     cmp     edi, 57
     jle    .strtol_normal_ascii
@@ -111,12 +111,12 @@ strtol:
     cmp     edi, 90
     jle     .strtol_big_char
 
-    sub     edi, 87                          ; get hexadecimal number from character
+    sub     edi, 87                          ; get low letter number from character (start with base 11)
     jmp     .strtol_cont_calc
 
     .strtol_big_char:
 
-    sub     edi, 55                          ; get hexadecimal number from character
+    sub     edi, 29                          ; get big letter number from character (start with base 37)
     jmp     .strtol_cont_calc
 
     .strtol_normal_ascii:
@@ -142,7 +142,6 @@ strtol:
     ; get (ebp+8 power of) of N-1 string index
     push    dword [ebp + (8+0)]
     push    ebx
-    ;push    eax
     call    pow
 
     add     esp, 8                           ; clear stack
@@ -195,7 +194,15 @@ ltostr:
     cmp     edx, 10
     jl      .ltostr_below_ten
 
-    add     edx, 55                ; if remainder is more than 10, then make it to be character A-Z
+    cmp     edx, 36
+    jl      .ltostr_below_thirty
+
+    add     edx, 29                ; if remainder is more than 36, then make it to be character A-Z
+    jmp     .ltostr_done_change_ascii
+
+    .ltostr_below_thirty:
+
+    add     edx, 87                ; if remainder is 10-35, then make it to be character a-z
     jmp     .ltostr_done_change_ascii
 
     .ltostr_below_ten:
