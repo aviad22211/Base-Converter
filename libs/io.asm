@@ -75,8 +75,7 @@ str_stdin:
     pop     ebx
 
     ; clear stack for this routine
-    mov     esp, ebp
-    pop     ebp
+    leave
     ret
 
 str_stdout:
@@ -106,8 +105,7 @@ str_stdout:
     pop     eax                     ; return back eax value
 
     ; clear stack for this routine
-    mov     esp, ebp
-    pop     ebp
+    leave
     ret
 
 long_stdin:
@@ -139,8 +137,7 @@ long_stdin:
     pop     ecx                     ; return back ecx value from the stack
 
     ; clean stack frame
-    mov     esp, ebp
-    pop     ebp
+    leave
     ret
 
 long_stdout:
@@ -178,8 +175,7 @@ long_stdout:
     pop     eax
 
     ; clean stack frame
-    mov     esp, ebp
-    pop     ebp
+    leave
     ret
 
 %endif

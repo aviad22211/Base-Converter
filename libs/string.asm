@@ -140,8 +140,7 @@ strtol:
     add     esp, 4
 
     ; cleaning up stack frame
-    mov     esp, ebp
-    pop     ebp
+    leave
     ret
 
 ltostr:
@@ -232,8 +231,7 @@ strrev:
 
     ; clear stack frame
     popa
-    mov     esp, ebp
-    pop     ebp
+    leave
     ret
 
 %endif

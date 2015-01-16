@@ -51,8 +51,7 @@ pow:
     pop     ecx
 
     ; clean stack frame
-    mov     esp, ebp
-    pop     ebp
+    leave
     ret
 
 %endif
