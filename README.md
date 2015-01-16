@@ -13,7 +13,7 @@ Also this program isn't fast enough like one that produced by high-level compile
 So in time, I will update this program to optimize it while I'm learning how compiler optimized high-level language.
 
 # Feature(s)
-- Can support number bases up to Base 36.
+- Can support number bases from Base 2 until Base 62.
 
 # Limitation(s)
 - Can't support integer input more than 32 bit.
