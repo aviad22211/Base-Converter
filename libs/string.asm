@@ -105,11 +105,11 @@ strtol:
     ; checking for hexadecimal
 
     cmp     edi, 57
-    jnge    .strtol_normal_ascii
+    jle    .strtol_normal_ascii
 
     ; check if char is A-Z
     cmp     edi, 90
-    jnge    .strtol_big_char
+    jle     .strtol_big_char
 
     sub     edi, 87                          ; get hexadecimal number from character
     jmp     .strtol_cont_calc
