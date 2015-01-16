@@ -11,7 +11,7 @@ pow:
     push    ebp
     mov     ebp, esp
 
-    ; store 2 registers into stack for future user
+    ; store 2 registers into stack for future use
     push    ecx             ; ecx gonna hold base
     push    ebx             ; ebx gonna counting
 
