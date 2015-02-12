@@ -7,7 +7,7 @@ segment .text
 
 strlen:
 
-    ; int strlen(void *buf)
+    ; __attribute__((cdecl)) int strlen(void *buf)
 
     ;---------------------------------------;
     ; README
@@ -33,7 +33,7 @@ strlen:
     .strlen_loop:
 
     ; end this routine if we had found null terminator (end of a string)
-    cmp     [ebp+eax], byte 0
+    cmp     [ebp + eax], byte 0
     je      .strlen_exit
 
     ; if still not found null terminator, continues looping
@@ -47,12 +47,12 @@ strlen:
 
 strtol:
 
-    ; int strtol(void *buf, int strBase)
+    ; __attribute__((cdecl)) int strtol(void *buf, int strBase)
 
     ;---------------------------------------;
     ; README
     ;
-    ; This routine takes string from perimeter, take also number base
+    ; This routine take string from perimeter, also take number base
     ; of the string number, then convert it into integer value.
     ;
     ; To make this clear, let say, I want following number
@@ -76,7 +76,7 @@ strtol:
     sub     esp, 4
     pusha
 
-    mov     esi, [ebp + (8+4)]               ; hold address for input string
+    mov     esi, [ebp + (8+0)]               ; hold address for input string
 
     ; get length of buf string buffer
     push    esi
@@ -139,8 +139,8 @@ strtol:
     push    eax
 
     ; get (ebp+8 power of) of N-1 string index
-    push    dword [ebp + (8+0)]
     push    ebx
+    push    dword [ebp + (8+4)]
     call    pow
 
     add     esp, 8                           ; clear stack
@@ -168,7 +168,7 @@ strtol:
 
 ltostr:
 
-    ; void ltostr(int num, void *buf, int strBase)
+    ; __attribute__((cdecl)) void ltostr(int num, void *buf, int strBase)
 
     ; setup stack frame
     push    ebp
@@ -177,9 +177,9 @@ ltostr:
 
     ; set-up registers & move perimeter values into registers
     xor     ecx, ecx               ; ecx = 0, gonna hold buf index
-    mov     eax, [ebp + (8+8)]     ; perimeter 1 (int num)
+    mov     eax, [ebp + (8+0)]     ; perimeter 1 (int num)
     mov     ebx, [ebp + (8+4)]     ; perimeter 2 (void *buf)
-    mov     edi, [ebp + (8+0)]     ; perimeter 3 (int strBase)
+    mov     edi, [ebp + (8+8)]     ; perimeter 3 (int strBase)
 
     .ltostr_loop:
 
@@ -235,7 +235,7 @@ ltostr:
 
 strrev:
 
-    ; void strrev(void *buf)
+    ; __attribute__((cdecl)) void strrev(void *buf)
 
     ; setup stack frame
     push    ebp

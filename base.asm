@@ -3,7 +3,6 @@
 
 %define constSize   50 	; enough, binary limit also don't exceeds 32 bits
 
-
 segment .rodata
 
 title       db  10, " Base Converter (coded in asm) @ Mohd Shahril", 10, 10, 0
@@ -49,8 +48,8 @@ main:
     call 	str_stdout
     add 	esp, 4
 
-    push 	input
     push 	dword constSize
+    push 	input
     call 	str_stdin
     add 	esp, 8
 
@@ -65,15 +64,18 @@ main:
     ; done taking input, now the real thing
 
     ; convert string containing number into integer (base 10)
-    push 	input
-    push 	edx
+    push    edx
+    push    input
     call 	strtol   		; return value at eax
     add 	esp, 8
 
     ; from integer (base 10), we convert back into string with user's targeted base
-    push 	eax
+    ; ecx       = target base
+    ; output    = string buffer for destination
+    ; eax       = integer value
+    push    ecx
     push 	output
-    push 	ecx
+    push    eax
     call 	ltostr
     add 	esp, 12
 

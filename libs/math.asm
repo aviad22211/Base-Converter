@@ -5,7 +5,7 @@ segment .text
 
 pow:
 
-    ; int pow(int base, int n)
+    ; __attribute__((cdecl)) int pow(int base, int n)
     
     ; setup stack frame
     push    ebp
@@ -15,7 +15,7 @@ pow:
     push    ecx             ; ecx gonna hold base
     push    ebx             ; ebx gonna counting
 
-    mov     ebx, [ebp + (8 + 0)]    ; copy N (power of) value into ebx from argument 
+    mov     ebx, [ebp + (8 + 4)]    ; copy N (power of) value into ebx from argument 
 
     ; if (power of) isn't zero, then continue execution
     cmp     ebx, 0
@@ -28,7 +28,7 @@ pow:
 
     .pow_continue:
     xor     eax, eax                ; eax = 0, eax gonna hold value
-    mov     ecx, [ebp + (8 + 4)]    ; copy base from argument into ecx
+    mov     ecx, [ebp + (8 + 0)]    ; copy base from argument into ecx
     mov     eax, ecx                ; copy base into eax (temporary)
     dec     ebx
 
