@@ -9,6 +9,36 @@ raw_rw:
 
     ;  __attribute__((cdecl)) void raw_rw(int syscall, int fd, const void *buf, size_t count)
 
+    ;---------------------------------------;
+    ; README
+    ;
+    ; This routine has 2 functionalities, which is input from STDIN
+    ; and also can output string to the STDOUT.
+    ;
+    ; Normally you don't require to use this routine, it's just for
+    ; internal purpose.
+    ;
+    ; - EXAMPLE -
+    ;
+    ; Input :
+    ; syscall 	= can be 3 (read) and 4 (write)
+    ; fd 		= file descriptor, can be 0 (STDIN) or 1 (STDOUT)
+    ; buf       = (buffer which size is 20 bytes)
+    ; count     = 20
+    ;
+    ; Usage :
+    ;   push 	dword 20
+    ; 	push 	buf
+    ; 	push 	dword (can be 1 or 0)
+    ; 	push 	dword (can be 3 or 4)
+    ;   call    raw_rw
+    ;   add     esp, 16     ; clear stack for pushed perimeters
+    ;
+    ; Output : 
+    ; buf = <user input : string>
+    ;
+    ;----------------------------------------;
+
     ; setup stack frame
     push    ebp
     mov     ebp, esp
@@ -28,7 +58,30 @@ raw_rw:
 
 str_stdin:
 
-    ; __attribute__((cdecl)) void str_stdin(void *buf, int length)
+    ; __attribute__((cdecl)) void str_stdin(void *buf, int count)
+
+    ;---------------------------------------;
+    ; README
+    ;
+    ; This routine take string user input from user.
+    ; Require 2 perimeters, first is buf which is empty buffer string, and
+    ; count which is size of buffer
+    ;
+    ; - EXAMPLE -
+    ;
+    ; Input :
+    ; buf       = (buffer which size is 20 bytes)
+    ; count     = 20
+    ;
+    ; Usage :
+    ;   push    dword 20
+    ;   push    buf
+    ;   call    str_stdin
+    ;   add     esp, 8     ; clear stack for pushed perimeters
+    ;
+    ; Output : 
+    ; buf = <user input : string>
+    ;----------------------------------------;
 
     ; setup stack frame
     push    ebp
@@ -37,7 +90,7 @@ str_stdin:
     ; call raw_rw with 4 important perimeter
     ; first perimeter is important, cuz its give hint whether we want to read or write
 
-    push    dword [ebp + (8 + 4)]   ; length of buffer
+    push    dword [ebp + (8 + 4)]   ; count of buffer
     push    dword [ebp + (8 + 0)]   ; buffer pointer
     push    dword 0                 ; stdin file descriptors
     push    dword 3                 ; read syscall code
@@ -55,7 +108,7 @@ str_stdin:
 
     .find_enter:
 
-    ; if ecx (index) already reached length buffer, then 
+    ; if ecx (index) already reached max count buffer, then 
     cmp     ecx, [ebp + (8 + 4)]
     je      .find_exit
 
@@ -82,6 +135,25 @@ str_stdin:
 str_stdout:
 
     ; __attribute__((cdecl)) void str_stdout(void *buf)
+
+    ;---------------------------------------;
+    ; README
+    ;
+    ; Take string buffer from buf pointer, and print it out on STDOUT
+    ;
+    ; - EXAMPLE -
+    ;
+    ; Input :
+    ; buf       = "Hello, World"
+    ;
+    ; Usage :
+    ;   push    buf
+    ;   call    str_stdout
+    ;   add     esp, 4     ; clear stack for pushed perimeters
+    ;
+    ; Output : 
+    ; None
+    ;----------------------------------------;
 
     ; setup stack frame
     push    ebp
@@ -114,6 +186,23 @@ long_stdin:
 
     ; __attribute__((cdecl)) int long_stdin()
 
+    ;---------------------------------------;
+    ; README
+    ;
+    ; Take integer input from user, and return it on EAX
+    ;
+    ; - EXAMPLE -
+    ;
+    ; Input :
+    ; None
+    ;
+    ; Usage :
+    ;   call    long_stdin
+    ;
+    ; Output : 
+    ; eax = <user input : integer>
+    ;----------------------------------------;
+
     ; setup stack frame
     push    ebp
     mov     ebp, esp
@@ -145,6 +234,25 @@ long_stdin:
 long_stdout:
 
     ; __attribute__((cdecl)) void long_stdout(int num)
+
+    ;---------------------------------------;
+    ; README
+    ;
+    ; Take number from num perimeter, and send into STDOUT
+    ;
+    ; - EXAMPLE -
+    ;
+    ; Input :
+    ; num 	= 99
+    ;
+    ; Usage :
+    ;   push    dword 99
+    ;   call    long_stdout
+    ;   add     esp, 4     ; clear stack for pushed perimeters
+    ;
+    ; Output : 
+    ; None
+    ;----------------------------------------;
 
     ; setup stack frame + store some registers into stack for later use
     push    ebp

@@ -6,6 +6,28 @@ segment .text
 pow:
 
     ; __attribute__((cdecl)) int pow(int base, int n)
+
+    ;---------------------------------------;
+    ; README
+    ;
+    ; This routine take 2 perimeter, base and power of N, and return calculation
+    ; value by eax.
+    ;
+    ; - EXAMPLE -
+    ;
+    ; Input : 
+    ; base  = 10
+    ; n     = 4
+    ;
+    ; Usage : 
+    ; push  dword 3
+    ; push  dword 10
+    ; call  pow
+    ; add   esp, 8  ; clear previous pushed perimeter
+    ;
+    ; Output :
+    ; eax = 10000
+    ;----------------------------------------;
     
     ; setup stack frame
     push    ebp

@@ -12,10 +12,26 @@ strlen:
     ;---------------------------------------;
     ; README
     ;
-    ; This one is simple, put your string pointer into buf perimeter,
-    ; you will get your result inside eax register.
+    ; This routine take string from perimeter, and count the 
+    ; bytes/characters until reach zero (null terminated character).
     ;
-    ; C PSEUDOCODE
+    ; - EXAMPLE -
+    ;
+    ; Input :
+    ; buf       = "Micro$oft"
+    ;
+    ; Usage :
+    ;   push    buf
+    ;   call    strtol
+    ;   add     esp, 4     ; clear stack for pushed perimeter
+    ;
+    ; Output : 
+    ; eax = 9
+    ;
+    ; Note :
+    ; - Behaviour is undefined if not string is inserted in perimeter.
+    ;
+    ; C-style code :
     ;
     ; int strlen(char *buf)
     ; {
@@ -23,7 +39,7 @@ strlen:
     ;   while(buf[len] != 0 && ++len);   
     ;   return len;
     ; }
-    ;---------------------------------------;
+    ;----------------------------------------;
 
     push    ebp
     mov     ebp, [esp + 8]
@@ -55,19 +71,21 @@ strtol:
     ; This routine take string from perimeter, also take number base
     ; of the string number, then convert it into integer value.
     ;
-    ; To make this clear, let say, I want following number
-    ;   "1000" in string, and it's in the base 10
+    ; - EXAMPLE -
     ;
-    ; So, at buf perimeter, put your "1000" pointer inside it.
-    ; For strBase, we know that 1000 is clearly in base 10 number
-    ; (it can also be binary, octal, base 5, etc), but we indicated it 
-    ; as base 10, so at strBase perimeter, set it to be 10.
+    ; Input :
+    ; buf       = "1111"
+    ; strBase   = 2
     ;
-    ; This routine will also works with base number larger than 10.
+    ; Usage :
+    ;   push    dword 2
+    ;   push    buf
+    ;   call    strtol
+    ;   add     esp, 8     ; clear stack for pushed perimeters
     ;
-    ; Hint on how this internally works, it's start working with the right-most number
-    ; into left-most number. If you're so curious on how this thing work, then have
-    ; a look in below assembly.
+    ; Output : 
+    ; eax = 15
+    ;
     ;----------------------------------------;
 
     ; setup stack frame
@@ -170,6 +188,32 @@ ltostr:
 
     ; __attribute__((cdecl)) void ltostr(int num, void *buf, int strBase)
 
+    ;---------------------------------------;
+    ; README
+    ;
+    ; This routine take 3 perimeters, first is num, this must be in
+    ; base10 number, second if destination buffer, and third is destination
+    ; buffer number base to present.
+    ;
+    ; - EXAMPLE -
+    ;
+    ; Input :
+    ; num       = 300
+    ; buf       = (buffer size 20)
+    ; strBase   = 2
+    ;
+    ; Usage :
+    ;   push    dword 2
+    ;   push    buf
+    ;   push    dword 300
+    ;   call    ltostr
+    ;   add     esp, 12     ; clear stack for pushed perimeters
+    ;
+    ; Output : 
+    ; buf = "100101100"
+    ;
+    ;----------------------------------------;
+
     ; setup stack frame
     push    ebp
     mov     ebp, esp
@@ -236,6 +280,25 @@ ltostr:
 strrev:
 
     ; __attribute__((cdecl)) void strrev(void *buf)
+
+    ;---------------------------------------;
+    ; README
+    ;
+    ; This routine take string buffer from perimeter, and reverse it.
+    ;
+    ; - EXAMPLE -
+    ;
+    ; Input :
+    ; buf = "123456"
+    ;
+    ; Usage : 
+    ; push  buf
+    ; call  strrev
+    ; add   esp, 4  ; clear previous pushed perimeter
+    ;
+    ; Output :
+    ; buf = "654321"
+    ;----------------------------------------;
 
     ; setup stack frame
     push    ebp
