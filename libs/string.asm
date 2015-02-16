@@ -7,12 +7,12 @@ segment .text
 
 strlen:
 
-    ; __attribute__((cdecl)) int strlen(void *buf)
+    ; __attribute__((cdecl)) size_t strlen(void *buf)
 
     ;---------------------------------------;
     ; README
     ;
-    ; This routine take string from perimeter, and count the 
+    ; This routine take string from perimeter, and count the
     ; bytes/characters until reach zero (null terminated character).
     ;
     ; - EXAMPLE -
@@ -25,7 +25,7 @@ strlen:
     ;   call    strtol
     ;   add     esp, 4     ; clear stack for pushed perimeter
     ;
-    ; Output : 
+    ; Output :
     ; eax = 9
     ;
     ; Note :
@@ -36,7 +36,7 @@ strlen:
     ; int strlen(char *buf)
     ; {
     ;   int len = 0;
-    ;   while(buf[len] != 0 && ++len);   
+    ;   while(buf[len] != 0 && ++len);
     ;   return len;
     ; }
     ;----------------------------------------;
@@ -83,8 +83,8 @@ strtol:
     ;   call    strtol
     ;   add     esp, 8     ; clear stack for pushed perimeters
     ;
-    ; Output : 
-    ; eax = 15
+    ; Output :
+    ; eax = 15 (signed number)
     ;
     ;----------------------------------------;
 
@@ -109,6 +109,15 @@ strtol:
 
     .strtol_loop:
 
+    ; check if '-' (negative) is found
+    cmp     byte [esi+eax], 45              ; ascii character for '-'
+    jne     .strtol_con_no_neg
+
+    neg     ecx                             ; make 2's complement operation on unsigned number
+    jmp     .strtol_exit                    ; finish off after number have converted
+
+    .strtol_con_no_neg:
+
     ; if eax index reach -1 (which is not valid string index), then end loop
     cmp     eax, 0
     jl      .strtol_exit
@@ -118,6 +127,10 @@ strtol:
     xor     edx, edx                         ; edx = 0
     mov     dl, byte [esi+eax]               ; copy character inside string into d lower
     mov     edi, edx
+
+    ; check if '+' (plus sign) is found, if yes then exit
+    cmp     edi, 43              ; ascii character for '+'
+    je      .strtol_exit
 
     ; checking for letter
 
@@ -151,7 +164,7 @@ strtol:
     dec     eax
     inc     ebx
     jmp     .strtol_loop
-    
+
     .strtol_continue:
 
     push    eax
@@ -175,7 +188,7 @@ strtol:
     .strtol_exit:
 
     ; move ecx into eax (eax is standard return value register)
-    mov     [ebp-4], ecx 
+    mov     [ebp-4], ecx
     popa
     mov     eax, [ebp-4]
     add     esp, 4
@@ -192,7 +205,7 @@ ltostr:
     ; README
     ;
     ; This routine take 3 perimeters, first is num, this must be in
-    ; base10 number, second if destination buffer, and third is destination
+    ; base10 signed number, second is destination buffer, and third is destination
     ; buffer number base to present.
     ;
     ; - EXAMPLE -
@@ -209,7 +222,7 @@ ltostr:
     ;   call    ltostr
     ;   add     esp, 12     ; clear stack for pushed perimeters
     ;
-    ; Output : 
+    ; Output :
     ; buf = "100101100"
     ;
     ;----------------------------------------;
@@ -227,7 +240,7 @@ ltostr:
 
     .ltostr_loop:
 
-    ; lets make 'do while' style inside asm :D 
+    ; lets make 'do while' style inside asm :D
 
     ; divide edx:eax by edi value, edx will hold remainder
     xor     edx, edx               ; edx = 0
@@ -257,7 +270,7 @@ ltostr:
 
     mov     [ebx+ecx], dl          ; move first 1 byte of edx into buf str buffer
     inc     ecx                    ; increment index (low to high) N-1
- 
+
     ; check if eax (which is divided "div" value) reach zero
     ; if equal zero (which already reach end of number), then stop looping
     ; otherwise go back and make calculation again
@@ -291,7 +304,7 @@ strrev:
     ; Input :
     ; buf = "123456"
     ;
-    ; Usage : 
+    ; Usage :
     ; push  buf
     ; call  strrev
     ; add   esp, 4  ; clear previous pushed perimeter

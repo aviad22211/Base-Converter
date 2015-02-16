@@ -21,20 +21,20 @@ raw_rw:
     ; - EXAMPLE -
     ;
     ; Input :
-    ; syscall 	= can be 3 (read) and 4 (write)
-    ; fd 		= file descriptor, can be 0 (STDIN) or 1 (STDOUT)
+    ; syscall   = can be 3 (read) and 4 (write)
+    ; fd        = file descriptor, can be 0 (STDIN) or 1 (STDOUT)
     ; buf       = (buffer which size is 20 bytes)
     ; count     = 20
     ;
     ; Usage :
-    ;   push 	dword 20
-    ; 	push 	buf
-    ; 	push 	dword (can be 1 or 0)
-    ; 	push 	dword (can be 3 or 4)
+    ;   push    dword 20
+    ;   push    buf
+    ;   push    dword (can be 1 or 0)
+    ;   push    dword (can be 3 or 4)
     ;   call    raw_rw
     ;   add     esp, 16     ; clear stack for pushed perimeters
     ;
-    ; Output : 
+    ; Output :
     ; buf = <user input : string>
     ;
     ;----------------------------------------;
@@ -79,7 +79,7 @@ str_stdin:
     ;   call    str_stdin
     ;   add     esp, 8     ; clear stack for pushed perimeters
     ;
-    ; Output : 
+    ; Output :
     ; buf = <user input : string>
     ;----------------------------------------;
 
@@ -108,7 +108,7 @@ str_stdin:
 
     .find_enter:
 
-    ; if ecx (index) already reached max count buffer, then 
+    ; if ecx (index) already reached max count buffer, then
     cmp     ecx, [ebp + (8 + 4)]
     je      .find_exit
 
@@ -151,7 +151,7 @@ str_stdout:
     ;   call    str_stdout
     ;   add     esp, 4     ; clear stack for pushed perimeters
     ;
-    ; Output : 
+    ; Output :
     ; None
     ;----------------------------------------;
 
@@ -168,7 +168,7 @@ str_stdout:
 
     ; call raw_rw with 4 perimeter (c-style perimeter)
 
-	push    eax                     ; length of buffer
+    push    eax                     ; length of buffer
     push    dword [ebp + (8 + 0)]   ; buffer pointer
     push    dword 1                 ; stdout file descriptors
     push    dword 4                 ; write syscall code
@@ -199,7 +199,7 @@ long_stdin:
     ; Usage :
     ;   call    long_stdin
     ;
-    ; Output : 
+    ; Output :
     ; eax = <user input : integer>
     ;----------------------------------------;
 
@@ -220,8 +220,8 @@ long_stdin:
     add     esp, 8                  ; clear stack
 
     ; convert input string from user into integer
-    push    dword 10 				; string base number
-    push    ecx 					; destination buffer
+    push    dword 10                ; string base number
+    push    ecx                     ; destination buffer
     call    strtol                  ; result will be put inside eax
     add     esp, 8                  ; clear stack
 
@@ -243,14 +243,14 @@ long_stdout:
     ; - EXAMPLE -
     ;
     ; Input :
-    ; num 	= 99
+    ; num   = 99
     ;
     ; Usage :
     ;   push    dword 99
     ;   call    long_stdout
     ;   add     esp, 4     ; clear stack for pushed perimeters
     ;
-    ; Output : 
+    ; Output :
     ; None
     ;----------------------------------------;
 
