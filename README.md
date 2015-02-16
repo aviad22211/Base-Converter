@@ -18,6 +18,7 @@ So in time, I will update this program to optimize it while I'm learning how com
 # Limitation(s)
 - Can't support integer input more than 32 bit.
 - Floating number isn't in support yet.
+- Signed number (negative number) isn't supported yet.
 
 # Credit(s)
 <a href='https://github.com/nikAizuddin'>Nik Mohamad Aizuddin</a> - For helping me with input stdin bug.
