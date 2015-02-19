@@ -30,15 +30,6 @@ strlen:
     ;
     ; Note :
     ; - Behaviour is undefined if not string is inserted in perimeter.
-    ;
-    ; C-style code :
-    ;
-    ; int strlen(char *buf)
-    ; {
-    ;   int len = 0;
-    ;   while(buf[len] != 0 && ++len);
-    ;   return len;
-    ; }
     ;----------------------------------------;
 
     push    ebp
@@ -237,6 +228,16 @@ ltostr:
     mov     eax, [ebp + (8+0)]     ; perimeter 1 (int num)
     mov     ebx, [ebp + (8+4)]     ; perimeter 2 (void *buf)
     mov     edi, [ebp + (8+8)]     ; perimeter 3 (int strBase)
+    xor     esi, esi               ; signed number +ve
+
+    cmp     edi, 10
+    jne     .ltostr_loop
+
+    test    eax, 0x80000000        ; check if right-most side bit is set (which is -ve number in signed value)
+    jz     .ltostr_loop
+
+    inc     esi
+    neg     eax
 
     .ltostr_loop:
 
@@ -277,6 +278,14 @@ ltostr:
     cmp     eax, 0
     jne     .ltostr_loop
 
+    test    esi, 1
+    jz      .ltostr_null
+
+    mov     [ebx+ecx], byte 40     ; add junk data (=.=)
+    inc     ecx
+
+    .ltostr_null:
+
     ; this is important, null terminator is important
     mov     [ebx+ecx], byte 0
 
@@ -284,6 +293,13 @@ ltostr:
     push    ebx
     call    strrev
     add     esp, 4                  ; clear stack
+
+    test    esi, 1                  ; check if right-most bit is set (-ve) or not set (+ve)
+    jz      .ltostr_exit
+
+    mov     [ebx], byte 45          ; add '-' minus sign at right most string
+
+    .ltostr_exit:
 
     ; clear stack frame
     popa
