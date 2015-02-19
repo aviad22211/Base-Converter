@@ -281,7 +281,7 @@ ltostr:
     test    esi, 1
     jz      .ltostr_null
 
-    mov     [ebx+ecx], byte 40     ; add junk data (=.=)
+    mov     [ebx+ecx], byte 45     ; add '-' minus sign if esi is set to 1
     inc     ecx
 
     .ltostr_null:
@@ -293,13 +293,6 @@ ltostr:
     push    ebx
     call    strrev
     add     esp, 4                  ; clear stack
-
-    test    esi, 1                  ; check if right-most bit is set (-ve) or not set (+ve)
-    jz      .ltostr_exit
-
-    mov     [ebx], byte 45          ; add '-' minus sign at right most string
-
-    .ltostr_exit:
 
     ; clear stack frame
     popa
