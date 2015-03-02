@@ -5,7 +5,7 @@ segment .text
 
 pow:
 
-    ; __attribute__((cdecl)) int pow(int base, int n)
+    ; int __cdecl pow(int base, int n)
 
     ;---------------------------------------;
     ; README
@@ -15,11 +15,11 @@ pow:
     ;
     ; - EXAMPLE -
     ;
-    ; Input : 
+    ; Input :
     ; base  = 10
     ; n     = 4
     ;
-    ; Usage : 
+    ; Usage :
     ; push  dword 3
     ; push  dword 10
     ; call  pow
@@ -28,7 +28,7 @@ pow:
     ; Output :
     ; eax = 10000
     ;----------------------------------------;
-    
+
     ; setup stack frame
     push    ebp
     mov     ebp, esp
@@ -37,7 +37,7 @@ pow:
     push    ecx             ; ecx gonna hold base
     push    ebx             ; ebx gonna counting
 
-    mov     ebx, [ebp + (8 + 4)]    ; copy N (power of) value into ebx from argument 
+    mov     ebx, [ebp + (8 + 4)]    ; copy N (power of) value into ebx from argument
 
     ; if (power of) isn't zero, then continue execution
     cmp     ebx, 0
@@ -57,11 +57,11 @@ pow:
     .pow_loop:
 
     ; if ebx (counting) already 0, then stop loop
-    cmp     ebx, 0          
+    cmp     ebx, 0
     je      .pow_end
 
     ; multiply eax with base number ecx
-    mul     ecx             
+    mul     ecx
     dec     ebx
 
     jmp     .pow_loop       ; loop for multiple times

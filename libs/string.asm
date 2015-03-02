@@ -7,7 +7,7 @@ segment .text
 
 strlen:
 
-    ; __attribute__((cdecl)) size_t strlen(void *buf)
+    ; size_t __cdecl strlen(void *buf)
 
     ;---------------------------------------;
     ; README
@@ -54,7 +54,7 @@ strlen:
 
 strtol:
 
-    ; __attribute__((cdecl)) int strtol(void *buf, int strBase)
+    ; int __cdecl strtol(void *buf, int strBase)
 
     ;---------------------------------------;
     ; README
@@ -190,7 +190,7 @@ strtol:
 
 ltostr:
 
-    ; __attribute__((cdecl)) void ltostr(int num, void *buf, int strBase)
+    ; void __cdecl ltostr(int num, void *buf, int strBase)
 
     ;---------------------------------------;
     ; README
@@ -301,7 +301,7 @@ ltostr:
 
 strrev:
 
-    ; __attribute__((cdecl)) void strrev(void *buf)
+    ; void __cdecl strrev(void *buf)
 
     ;---------------------------------------;
     ; README

@@ -7,7 +7,7 @@ segment .text
 
 raw_rw:
 
-    ;  __attribute__((cdecl)) void raw_rw(int syscall, int fd, const void *buf, size_t count)
+    ; void __cdecl raw_rw(int syscall, int fd, const void *buf, size_t count)
 
     ;---------------------------------------;
     ; README
@@ -58,7 +58,7 @@ raw_rw:
 
 str_stdin:
 
-    ; __attribute__((cdecl)) void str_stdin(void *buf, int count)
+    ; void __cdecl str_stdin(void *buf, int count)
 
     ;---------------------------------------;
     ; README
@@ -134,7 +134,7 @@ str_stdin:
 
 str_stdout:
 
-    ; __attribute__((cdecl)) void str_stdout(void *buf)
+    ; void __cdecl str_stdout(void *buf)
 
     ;---------------------------------------;
     ; README
@@ -184,7 +184,7 @@ str_stdout:
 
 long_stdin:
 
-    ; __attribute__((cdecl)) int long_stdin()
+    ; int __cdecl long_stdin()
 
     ;---------------------------------------;
     ; README
@@ -233,7 +233,7 @@ long_stdin:
 
 long_stdout:
 
-    ; __attribute__((cdecl)) void long_stdout(int num)
+    ; void __cdecl long_stdout(int num)
 
     ;---------------------------------------;
     ; README

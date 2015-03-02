@@ -16,7 +16,7 @@ all:
 
 debug:
 	@${ASSEMBLER} -f ${MACHINE} -F ${DEBUGFORMAT} ${SRCFILE} -i './libs/'
-	@${LINKER} ${OBJECTFILE} -o ${BINARY} ${LINKERFLAGS} -ggdb
+	@${LINKER} ${OBJECTFILE} -o ${BINARY} ${LINKERFLAGS} -ggdb -pg
 	@rm -rf ${OBJECTFILE}
 
 clean:
