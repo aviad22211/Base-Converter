@@ -32,7 +32,7 @@ raw_rw:
     ;   push    dword (can be 1 or 0)
     ;   push    dword (can be 3 or 4)
     ;   call    raw_rw
-    ;   add     esp, 16     ; clear stack for pushed perimeters
+    ;   add     esp, 16     ; clear stack for pushed parameters
     ;
     ; Output :
     ; buf = <user input : string>
@@ -44,7 +44,7 @@ raw_rw:
     mov     ebp, esp
     pusha                           ; push all registers into stack
 
-    ; call read function from kernel, with 4 perimeter
+    ; call read function from kernel, with 4 parameter
     mov     eax, dword [ebp + (8 + 0)]  ; syscall code (man [code] for more info)
     mov     ebx, dword [ebp + (8 + 4)]  ; int fd
     mov     ecx, dword [ebp + (8 + 8)]  ; void *buf
@@ -64,7 +64,7 @@ str_stdin:
     ; README
     ;
     ; This routine take string user input from user.
-    ; Require 2 perimeters, first is buf which is empty buffer string, and
+    ; Require 2 parameters, first is buf which is empty buffer string, and
     ; count which is size of buffer
     ;
     ; - EXAMPLE -
@@ -77,7 +77,7 @@ str_stdin:
     ;   push    dword 20
     ;   push    buf
     ;   call    str_stdin
-    ;   add     esp, 8     ; clear stack for pushed perimeters
+    ;   add     esp, 8     ; clear stack for pushed parameters
     ;
     ; Output :
     ; buf = <user input : string>
@@ -87,8 +87,8 @@ str_stdin:
     push    ebp
     mov     ebp, esp
 
-    ; call raw_rw with 4 important perimeter
-    ; first perimeter is important, cuz its give hint whether we want to read or write
+    ; call raw_rw with 4 important parameter
+    ; first parameter is important, cuz its give hint whether we want to read or write
 
     push    dword [ebp + (8 + 4)]   ; count of buffer
     push    dword [ebp + (8 + 0)]   ; buffer pointer
@@ -149,7 +149,7 @@ str_stdout:
     ; Usage :
     ;   push    buf
     ;   call    str_stdout
-    ;   add     esp, 4     ; clear stack for pushed perimeters
+    ;   add     esp, 4     ; clear stack for pushed parameters
     ;
     ; Output :
     ; None
@@ -166,7 +166,7 @@ str_stdout:
     call    strlen
     add     esp, 4                  ; clear stack
 
-    ; call raw_rw with 4 perimeter (c-style perimeter)
+    ; call raw_rw with 4 parameter (c-style parameter)
 
     push    eax                     ; length of buffer
     push    dword [ebp + (8 + 0)]   ; buffer pointer
@@ -174,7 +174,7 @@ str_stdout:
     push    dword 4                 ; write syscall code
     call    raw_rw
 
-    add     esp, 16                 ; clear stack perimeter
+    add     esp, 16                 ; clear stack parameter
 
     pop     eax                     ; return back eax value
 
@@ -238,7 +238,7 @@ long_stdout:
     ;---------------------------------------;
     ; README
     ;
-    ; Take number from num perimeter, and send into STDOUT
+    ; Take number from num parameter, and send into STDOUT
     ;
     ; - EXAMPLE -
     ;
@@ -248,7 +248,7 @@ long_stdout:
     ; Usage :
     ;   push    dword 99
     ;   call    long_stdout
-    ;   add     esp, 4     ; clear stack for pushed perimeters
+    ;   add     esp, 4     ; clear stack for pushed parameters
     ;
     ; Output :
     ; None
@@ -269,7 +269,7 @@ long_stdout:
     ; this will convert integer into string by calling ltostr routine
     push    dword 10                       ; base of integer (normal is base 10)
     push    ecx                            ; destination buffer
-    push    dword [ebp + (8 + 0)]          ; value of integer perimeter
+    push    dword [ebp + (8 + 0)]          ; value of integer parameter
     call    ltostr
     add     esp, 12                        ; clear stack
 

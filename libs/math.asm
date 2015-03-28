@@ -10,7 +10,7 @@ pow:
     ;---------------------------------------;
     ; README
     ;
-    ; This routine take 2 perimeter, base and power of N, and return calculation
+    ; This routine take 2 parameter, base and power of N, and return calculation
     ; value by eax.
     ;
     ; - EXAMPLE -
@@ -23,7 +23,7 @@ pow:
     ; push  dword 3
     ; push  dword 10
     ; call  pow
-    ; add   esp, 8  ; clear previous pushed perimeter
+    ; add   esp, 8  ; clear previous pushed parameter
     ;
     ; Output :
     ; eax = 10000

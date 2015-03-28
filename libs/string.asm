@@ -12,7 +12,7 @@ strlen:
     ;---------------------------------------;
     ; README
     ;
-    ; This routine take string from perimeter, and count the
+    ; This routine take string from parameter, and count the
     ; bytes/characters until reach zero (null terminated character).
     ;
     ; - EXAMPLE -
@@ -23,13 +23,13 @@ strlen:
     ; Usage :
     ;   push    buf
     ;   call    strtol
-    ;   add     esp, 4     ; clear stack for pushed perimeter
+    ;   add     esp, 4     ; clear stack for pushed parameter
     ;
     ; Output :
     ; eax = 9
     ;
     ; Note :
-    ; - Behaviour is undefined if not string is inserted in perimeter.
+    ; - Behaviour is undefined if not string is inserted in parameter.
     ;----------------------------------------;
 
     push    ebp
@@ -59,7 +59,7 @@ strtol:
     ;---------------------------------------;
     ; README
     ;
-    ; This routine take string from perimeter, also take number base
+    ; This routine take string from parameter, also take number base
     ; of the string number, then convert it into integer value.
     ;
     ; - EXAMPLE -
@@ -72,7 +72,7 @@ strtol:
     ;   push    dword 2
     ;   push    buf
     ;   call    strtol
-    ;   add     esp, 8     ; clear stack for pushed perimeters
+    ;   add     esp, 8     ; clear stack for pushed parameters
     ;
     ; Output :
     ; eax = 15 (signed number)
@@ -195,7 +195,7 @@ ltostr:
     ;---------------------------------------;
     ; README
     ;
-    ; This routine take 3 perimeters, first is num, this must be in
+    ; This routine take 3 parameters, first is num, this must be in
     ; base10 signed number, second is destination buffer, and third is destination
     ; buffer number base to present.
     ;
@@ -211,7 +211,7 @@ ltostr:
     ;   push    buf
     ;   push    dword 300
     ;   call    ltostr
-    ;   add     esp, 12     ; clear stack for pushed perimeters
+    ;   add     esp, 12     ; clear stack for pushed parameters
     ;
     ; Output :
     ; buf = "100101100"
@@ -223,11 +223,11 @@ ltostr:
     mov     ebp, esp
     pusha                          ; push all registers into stack
 
-    ; set-up registers & move perimeter values into registers
+    ; set-up registers & move parameter values into registers
     xor     ecx, ecx               ; ecx = 0, gonna hold buf index
-    mov     eax, [ebp + (8+0)]     ; perimeter 1 (int num)
-    mov     ebx, [ebp + (8+4)]     ; perimeter 2 (void *buf)
-    mov     edi, [ebp + (8+8)]     ; perimeter 3 (int strBase)
+    mov     eax, [ebp + (8+0)]     ; parameter 1 (int num)
+    mov     ebx, [ebp + (8+4)]     ; parameter 2 (void *buf)
+    mov     edi, [ebp + (8+8)]     ; parameter 3 (int strBase)
     xor     esi, esi               ; signed number +ve
 
     cmp     edi, 10
@@ -306,7 +306,7 @@ strrev:
     ;---------------------------------------;
     ; README
     ;
-    ; This routine take string buffer from perimeter, and reverse it.
+    ; This routine take string buffer from parameter, and reverse it.
     ;
     ; - EXAMPLE -
     ;
@@ -316,7 +316,7 @@ strrev:
     ; Usage :
     ; push  buf
     ; call  strrev
-    ; add   esp, 4  ; clear previous pushed perimeter
+    ; add   esp, 4  ; clear previous pushed parameter
     ;
     ; Output :
     ; buf = "654321"
