@@ -12,6 +12,9 @@ Please note that this program will not compile under platform other than <b>Linu
 Also this program isn't fast enough like one that produced by high-level compilers. This was written as practice for me while learning assembly language.
 So in time, I will update this program to optimize it while I'm learning how compiler translated/optimized high-level language.
 
+-- updates --
+https://godbolt.org/ - good website that can enable us to see compiler assembly output with ease.
+
 # Feature(s)
 - Can support number bases from Base 2 until Base 62.
 - Support signed number. (2's complement)
